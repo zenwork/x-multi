@@ -1,0 +1,14 @@
+{
+  "name": "demo-client",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "serve ."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "serve": "^14.1.2"
+  }
+}

@@ -1,6 +1,8 @@
 package io.zenwork.x.multi
 
 import kotlin.js.JsExport
+import kotlin.js.JsName
+
 
 @JsExport
 interface Calc {
@@ -24,4 +26,23 @@ class Calculator : Calc {
         return eq
     }
 
+}
+
+@JsExport
+@JsName("Result")
+class Result(
+    @JsName("name")
+    val name: String = "",
+    val status: Int = 200,
+    val details: String = "",
+    val message: String = "OK",
+    val originalValue: String? = null
+)
+
+
+@JsExport
+class Validation {
+    fun validate(name: String, value: String): Result {
+        return Result(name = name, originalValue = value, details = "nothing to do")
+    }
 }

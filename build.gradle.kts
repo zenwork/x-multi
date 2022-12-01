@@ -1,14 +1,18 @@
 import org.jetbrains.kotlin.gradle.dsl.KotlinJsCompile
 
 plugins {
-    kotlin("multiplatform") version "1.7.20"
+    kotlin("multiplatform") version "1.8.0-Beta"
+    kotlin("plugin.serialization") version "1.8.0-Beta"
+    application
 }
 
 group = "io.zenwork"
 version = "0.0.1"
 
 repositories {
+    jcenter()
     mavenCentral()
+    maven("https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven")
 }
 
 kotlin {
@@ -22,12 +26,13 @@ kotlin {
         }
     }
     js(IR) {
-        binaries.executable()
+        binaries.library()
         browser {
             commonWebpackConfig {
-                cssSupport.enabled = true
+//                cssSupport()
             }
         }
+        nodejs()
     }
 //    val hostOs = System.getProperty("os.name")
 //    val isMingwX64 = hostOs.startsWith("Windows")
@@ -44,10 +49,14 @@ kotlin {
             languageSettings.apply {
                 optIn("kotlin.js.ExperimentalJsExport")
             }
+            dependencies{
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
+
+            }
         }
         val commonMain by getting {
             dependencies{
-                implementation("io.github.aakira:napier:2.6.1")
+//                implementation("io.github.aakira:napier:2.6.1")
             }
         }
         val commonTest by getting {
