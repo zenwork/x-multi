@@ -10,7 +10,6 @@ group = "io.zenwork"
 version = "0.0.1"
 
 repositories {
-    jcenter()
     mavenCentral()
     maven("https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven")
 }
@@ -73,6 +72,6 @@ kotlin {
     }
 
     tasks.named<KotlinJsCompile>("compileKotlinJs").configure {
-        kotlinOptions.moduleKind = "plain"
+        kotlinOptions.moduleKind = "umd"
     }
 }

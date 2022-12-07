@@ -1,5 +1,3 @@
-import io.zenwork.x.multi.NOK
-import io.zenwork.x.multi.OK
 import io.zenwork.x.multi.Result
 import io.zenwork.x.multi.Rule
 import io.zenwork.x.multi.Validation
@@ -69,16 +67,16 @@ class ValidationTest {
     }
 
     class EstimationPokerRule : Rule("is/x/estimation-poker") {
-        override fun <Number>rule(value: Number): Result {
+        override fun <Number> rule(value: Number, validator: Validation): Result {
             return when (value) {
-                0 -> OK(name, value)
-                1-> OK(name, value)
-                2-> OK(name, value)
-                3-> OK(name, value)
-                5-> OK(name, value)
-                8-> OK(name, value)
-                13-> OK(name, value)
-                else -> NOK(name, value)
+                0 -> validator.OK(name, value)
+                1 -> validator.OK(name, value)
+                2 -> validator.OK(name, value)
+                3 -> validator.OK(name, value)
+                5 -> validator.OK(name, value)
+                8 -> validator.OK(name, value)
+                13 -> validator.OK(name, value)
+                else -> validator.NOK(name, value)
             }
         }
     }

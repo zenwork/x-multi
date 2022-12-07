@@ -7,6 +7,18 @@
     <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
     <link rel="manifest" href="favicon/site.webmanifest">
+    <style>
+        .OK {
+            background: lightgreen;
+        }
+        .NOK {
+            background: lightpink;
+        }
+
+        li {
+            width: 30rem;
+        }
+    </style>
 </head>
 <body>
     <h1>Validation Demo</h1>
@@ -16,18 +28,9 @@
         <script type="text/javascript" src="build/js/packages/x/kotlin/x.js"></script>
         <script type="module">
             import {html, render} from 'https://cdn.jsdelivr.net/gh/lit/dist@2/all/lit-all.min.js'
+            import {rules} from './custom-rules.js'
 
-            let v = new x.io.zenwork.x.multi.Validation([{
-                name:'is/x/estimation-poker',
-                rule:(value) => {
-                    if (typeof (value) === 'number') {
-                        if ([0, 1, 2, 3, 5, 8, 13].some(e => e === value)) {
-                            return x.io.zenwork.x.multi.OK('is/x/estimation-poker', value)
-                        }
-                    }
-                    return x.io.zenwork.x.multi.NOK('is/x/estimation-poker', value)
-                }
-            }])
+            let v = new x.io.zenwork.x.multi.Validation(rules)
 
             function validationOutput(name, rule, value, validator = v) {
                 let result = validator.validate(rule, value)
@@ -35,10 +38,11 @@
                     <section>
                         <h2>${name}</h2>
                         <ul style="font-family:monospace">
-                            <li>value..: ${result.originalValue}</li>
-                            <li>rule...: ${result.rule}</li>
-                            <li>status.: ${result.status}</li>
-                            <li>message: ${result.message}</li>
+                            <li class="${result.message}">status.: ${result.status} message: ${result.message}</li>
+                            <br>
+                            <li style="font-weight: bolder">value..: ${result.originalValue}</li>
+                            <li style="font-style: italic">rule...: ${result.rule}</li>
+                            <br>
                             <li>details: ${result.details}</li>
                         </ul>
                     </section>
