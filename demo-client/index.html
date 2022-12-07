@@ -3,15 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <title>Test</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="manifest" href="favicon/site.webmanifest">
 </head>
 <body>
-    hello!
-    <script type="text/javascript" src="build/js/packages/x/kotlin/kotlin-kotlin-stdlib-js-ir.js"> </script>
-    <script type="text/javascript" src="build/js/packages/x/kotlin/kotlinx-serialization-kotlinx-serialization-core-js-ir.js"> </script>
-    <script type="text/javascript" src="build/js/packages/x/kotlin/x.js"> </script>
-    <script>
-        document.body.innerHTML = JSON.stringify(new x.io.zenwork.x.multi.Validation().validate("foo","bar"))
-    </script>
+    <h1>Validation Demo</h1>
+        <script type="text/javascript" src="build/js/packages/x/kotlin/kotlin-kotlin-stdlib-js-ir.js"></script>
+        <script type="text/javascript"
+                src="build/js/packages/x/kotlin/kotlinx-serialization-kotlinx-serialization-core-js-ir.js"></script>
+        <script type="text/javascript" src="build/js/packages/x/kotlin/x.js"></script>
+        <script type="module">
+            import {html, render} from 'https://cdn.jsdelivr.net/gh/lit/dist@2/all/lit-all.min.js'
+
+            let v = new x.io.zenwork.x.multi.Validation([{
+                name:'is/x/estimation-poker',
+                rule:(value) => {
+                    if (typeof (value) === 'number') {
+                        if ([0, 1, 2, 3, 5, 8, 13].some(e => e === value)) {
+                            return x.io.zenwork.x.multi.OK('is/x/estimation-poker', value)
+                        }
+                    }
+                    return x.io.zenwork.x.multi.NOK('is/x/estimation-poker', value)
+                }
+            }])
+
+            function validationOutput(name, rule, value, validator = v) {
+                let result = validator.validate(rule, value)
+                return html`
+                    <section>
+                        <h2>${name}</h2>
+                        <ul style="font-family:monospace">
+                            <li>value..: ${result.originalValue}</li>
+                            <li>rule...: ${result.rule}</li>
+                            <li>status.: ${result.status}</li>
+                            <li>message: ${result.message}</li>
+                            <li>details: ${result.details}</li>
+                        </ul>
+                    </section>
+                `
+            }
+
+            render([
+                       validationOutput('null', 'is/null', null),
+                       validationOutput('string', 'is/string', 'bar'),
+                       validationOutput('number', 'is/number', 100),
+                       validationOutput('not a number', 'is/number', null),
+                       validationOutput('not a positive number', 'is/number/positive', -100),
+                       validationOutput('is negative number', 'is/number/negative', -99.9999),
+                       validationOutput('is valid estimation', 'is/x/estimation-poker', 13),
+                       validationOutput('is not valid estimation', 'is/x/estimation-poker', 11)], document.body)
+        </script>
 
 </body>
 </html>
