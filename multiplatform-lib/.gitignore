@@ -11,7 +11,7 @@
 *.rar
 hs_err_pid*
 replay_pid*
-.idea
+../.idea
 cmake-build-*/
 *.iws
 out/
@@ -80,7 +80,7 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-.gradle
+multiplatform-lib/.gradle
 **/build/
 !src/**/build/
 gradle-app.setting
